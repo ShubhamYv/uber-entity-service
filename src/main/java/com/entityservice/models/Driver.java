@@ -1,5 +1,4 @@
 package com.entityservice.models;
-
 import java.util.List;
 
 import org.hibernate.annotations.Fetch;

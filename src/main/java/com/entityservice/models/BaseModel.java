@@ -1,5 +1,6 @@
 package com.entityservice.models;
 
+
 import java.util.Date;
 
 import org.springframework.data.annotation.CreatedDate;
