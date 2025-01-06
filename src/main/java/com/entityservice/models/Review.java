@@ -15,32 +15,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "booking_review")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "booking_review")
 @Inheritance(strategy = InheritanceType.JOINED)
+
 public class Review extends BaseModel {
 
 	@Column(nullable = false)
 	private String content;
 
-	@Column(nullable = false)
 	private Double rating;
-	
+
 	@OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
 	private Booking booking;
-	
-	
-    public static ReviewBuilder builder() {
-        return new ReviewBuilder();
-    }
 
-    public static class ReviewBuilder extends BaseModel.BaseModelBuilder<ReviewBuilder> {
-        
-    }
+	@Override
+	public String toString() {
+		return "Review: " + this.content + " " + this.rating + " " + " booking: " + this.booking.getId() + " "
+				+ this.createdAt;
+	}
 }
