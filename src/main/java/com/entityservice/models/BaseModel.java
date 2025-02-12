@@ -1,62 +1,31 @@
 package com.entityservice.models;
 
-
-import java.util.Date;
-
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Date;
 
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 @Getter
 @Setter
 public abstract class BaseModel {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id // this annotation makes the id property a primary key of our table
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Identity means auto_increment
 	protected Long id;
 
 	@Column(nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	@CreatedDate
+	@Temporal(TemporalType.TIMESTAMP) // this annotation tells spring about the formats of Date object to be stored
+										// i.e. Date / Time ? Timestamp
+	@CreatedDate // this annotation tells spring that only handle it for object creation
 	protected Date createdAt;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	@LastModifiedDate
+	@LastModifiedDate // this annotation tells spring that only handle it for object update
 	protected Date updatedAt;
-
-	// Create a builder for BaseModel
-	@SuppressWarnings("unchecked")
-	public abstract static class BaseModelBuilder<T extends BaseModelBuilder<T>> {
-		protected Long id;
-		protected Date createdAt;
-		protected Date updatedAt;
-
-		public T id(Long id) {
-			this.id = id;
-			return (T) this;
-		}
-
-		public T createdAt(Date createdAt) {
-			this.createdAt = createdAt;
-			return (T) this;
-		}
-
-		public T updatedAt(Date updatedAt) {
-			this.updatedAt = updatedAt;
-			return (T) this;
-		}
-	}
 }
