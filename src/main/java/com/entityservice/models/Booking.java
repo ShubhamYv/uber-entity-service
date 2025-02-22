@@ -2,6 +2,7 @@ package com.entityservice.models;
 
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -41,10 +42,12 @@ public class Booking extends BaseModel {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Passenger passenger;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private ExactLocation startLocation;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private ExactLocation endLocation;
+	
+	// TODO: Add price related fields
 
 }
